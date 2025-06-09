@@ -44,6 +44,30 @@ def get_sploc_head(row, df):
         return head.iloc[0]['SPLOC']
     return None
 
+def get_poverty_head(row, df):
+    head = df[(df['SERIAL'] == row['SERIAL']) & (df['RELATE'] == 1)]
+    if not head.empty:
+        return int(head.iloc[0]['POVERTY'])
+    return None
+
+def get_gcrepon_head(row, df):
+    head = df[(df['SERIAL'] == row['SERIAL']) & (df['RELATE'] == 1)]
+    if not head.empty:
+        if head.iloc[0]['GCRESPON'] == 2:
+            return 2
+        elif head.iloc[0]['GCRESPON'] == 1:
+            return 1
+        else:
+            return 0
+        
+def get_nchild_head(row, df):
+    head = df[(df['SERIAL'] == row['SERIAL']) & (df['RELATE'] == 1)]
+    if not head.empty:
+        return int(head.iloc[0]['NCHILD'])
+    return None
+
+
+
 
 df['AGE_MOM_RECREATED'] = df.apply(lambda row: get_age_mom(row, df), axis=1)
 df['AGE_POP_RECREATED'] = df.apply(lambda row: get_age_pop(row, df), axis=1)
