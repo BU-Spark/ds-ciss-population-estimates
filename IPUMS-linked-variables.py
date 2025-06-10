@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 
 file_path = r"D:\MS\Summer 25\Spark\Population Estimates\usa_00214.csv"
 df = pd.read_csv(file_path)
@@ -66,6 +67,26 @@ def get_nchild_head(row, df):
         return int(head.iloc[0]['NCHILD'])
     return None
 
+def get_related_mom(row, df):
+    head = df[(df['SERIAL'] == row['SERIAL']) & (df['RELATE'] == 1)]
+    mom_for_per = row['MOMLOC']
+    if mom_for_per == 0:
+        return np.NaN
+    mom = df[(df['SERIAL'] == row['SERIAL']) & (df['PERNUM'] == mom_for_per)]
+    if not mom.empty:
+        return mom.iloc[0]['RELATED']
+    return np.NaN
+
+def get_related_pop(row, df):
+    head = df[(df['SERIAL'] == row['SERIAL']) & (df['RELATE'] == 1)]
+    pop_for_per = row['POPLOC']
+    if pop_for_per == 0:
+        return np.NaN
+    pop = df[(df['SERIAL'] == row['SERIAL']) & (df['PERNUM'] == pop_for_per)]
+    if not pop.empty:
+        return pop.iloc[0]['RELATED']
+    return np.NaN
+
 def get_var(row, df, var_name):
     if var_name == 'AGE_MOM_RECREATED':
         return get_age_mom(row, df)
@@ -85,9 +106,12 @@ def get_var(row, df, var_name):
         return get_gcrepon_head(row, df)
     elif var_name == 'NCHILD_HEAD_RECREATED':
         return get_nchild_head(row, df)
-        
+    elif var_name == 'RELATED_MOM_RECREATED':
+        return get_related_mom(row, df)
+    elif var_name == 'RELATED_POP_RECREATED':
+        return get_related_pop(row, df)
 
-linked_vars = ['AGE_MOM', 'AGE_POP', 'AGE_HEAD', 'MOMLOC_HEAD', 'POPLOC_HEAD', 'SPLOC_HEAD', 'POVERTY_HEAD', 'GCRESPON_HEAD', 'NCHILD_HEAD']
+linked_vars = ['AGE_MOM', 'AGE_POP', 'AGE_HEAD', 'MOMLOC_HEAD', 'POPLOC_HEAD', 'SPLOC_HEAD', 'POVERTY_HEAD', 'GCRESPON_HEAD', 'NCHILD_HEAD', 'RELATED_MOM', 'RELATED_POP']
 for var in linked_vars:
     df[f'{var}_RECREATED'] = df.apply(lambda row: get_var(row, df, f'{var}_RECREATED'), axis=1)
     print(f'Do values for {var} and {var}_RECREATED match?: {df[f"{var}_RECREATED"].equals(df[var])}')
