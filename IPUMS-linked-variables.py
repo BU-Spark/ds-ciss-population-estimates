@@ -20,7 +20,6 @@ def get_age_pop(row, df):
             return pop.iloc[0]['AGE']
     return None
 
-
 def get_age_head(row, df):
     head = df[(df['SERIAL'] == row['SERIAL']) & (df['RELATE'] == 1)]
     if not head.empty:
@@ -114,13 +113,13 @@ def get_var(row, df, var_name):
 linked_vars = ['AGE_MOM', 'AGE_POP', 'AGE_HEAD', 'MOMLOC_HEAD', 'POPLOC_HEAD', 'SPLOC_HEAD', 'POVERTY_HEAD', 'GCRESPON_HEAD', 'NCHILD_HEAD', 'RELATED_MOM', 'RELATED_POP']
 for var in linked_vars:
     df[f'{var}_RECREATED'] = df.apply(lambda row: get_var(row, df, f'{var}_RECREATED'), axis=1)
-    print(f'Do values for {var} and {var}_RECREATED match?: {df[f"{var}_RECREATED"].equals(df[var])}')
+    print(f'Do values for {var} and {var}_RECREATED match?: {df[f"{var}_RECREATED"].equals(df[var])}') 
 # df['AGE_MOM_RECREATED'] = df.apply(lambda row: get_age_mom(row, df), axis=1)
 # df['AGE_POP_RECREATED'] = df.apply(lambda row: get_age_pop(row, df), axis=1)
 # df['AGE_HEAD_RECREATED'] = df.apply(lambda row: get_age_head(row, df), axis=1)
 # df['MOMLOC_HEAD_RECREATED'] = df.apply(lambda row: get_momloc_head(row, df), axis=1)
 # df['POPLOC_HEAD_RECREATED'] = df.apply(lambda row: get_poploc_head(row, df), axis=1)
-# df['SPLOC_HEAD_RECREATED'] = df.apply(lambda row: get_sploc_head(row, df), axis=1)
+# df['SPLOC_HEAD_RECREATED'] = df.apply(lambda row: get_sploc_head(row, df), axis=1) 
 
 
 # print(df[[
@@ -131,4 +130,6 @@ for var in linked_vars:
 #     'MOMLOC_HEAD_RECREATED', 'POPLOC_HEAD_RECREATED', 'SPLOC_HEAD_RECREATED'
 # ]].head(20))
 
-# print(df[['SERIAL', 'PERNUM', 'AGE', 'MOMLOC', 'AGE_MOM', 'AGE_MOM_RECREATED', 'AGE_POP', 'AGE_POP_RECREATED']].head(20))
+# print(df[['SERIAL', 'PERNUM', 'AGE', 'MOMLOC', 'AGE_MOM', 'AGE_MOM_RECREATED', 'AGE_POP', 'AGE_POP_RECREATED']].head(20)) 
+
+print(df[['SERIAL', 'PERNUM', 'AGE_HEAD', 'AGE_HEAD_RECREATED']].head(20)) 
