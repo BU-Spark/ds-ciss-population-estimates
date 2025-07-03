@@ -44,7 +44,7 @@ From your command line:
 # Clone this repository
 $ git clone https://github.com/BU-Spark/ds-ciss-population-estimates.git
 ```
-The colab notebook mentioned in [this link](https://colab.research.google.com/drive/1RueEWVTUj839praUTcWMOMicdaRVRf2i#scrollTo=HpGnyuqne2We) provides you with detailed instructions to compute these variables in the ACS dataset and use them for analysis.
+This [colab notebook](https://colab.research.google.com/drive/1RueEWVTUj839praUTcWMOMicdaRVRf2i#scrollTo=HpGnyuqne2We) provides you with detailed instructions to compute these variables in the ACS dataset and use them for analysis.
  
 ## Project Description
 
