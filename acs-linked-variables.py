@@ -148,7 +148,7 @@ def get_poverty_head_acs(df):
 
 def derive_sp_loc_head(df):
     result_df = df.copy()
-    result_df['SP_LOC_HEAD'] = 0  # Default to 0 if no spouse found (to match IPUMS style)
+    result_df['SPLOC_HEAD_acs'] = 0  # Default to 0 if no spouse found (to match IPUMS style)
 
     for serialno, household in df.groupby('SERIALNO'):
         # Step 1: Find the head of household
@@ -168,7 +168,7 @@ def derive_sp_loc_head(df):
 
         # Step 3: Assign to all household rows for convenience
         household_mask = (result_df['SERIALNO'] == serialno)
-        result_df.loc[household_mask, 'SP_LOC_HEAD'] = sp_sporder
+        result_df.loc[household_mask, 'SPLOC_HEAD_acs'] = sp_sporder
 
     return result_df
 
@@ -203,7 +203,7 @@ def main():
     print(f'Match rate for GCRESPON_HEAD: {len(df_mass_res_merged.loc[df_mass_res_merged["GCRESPON_HEAD_acs"] == df_mass_res_merged["GCRESPON_HEAD"]])/len(df_mass_res_merged)}')
     print(f'Match rate for POPLOC_HEAD: {len(df_mass_res_merged.loc[df_mass_res_merged["POPLOC_HEAD_acs"] == df_mass_res_merged["POPLOC_HEAD"]])/len(df_mass_res_merged)}')
     print(f'Match rate for MOM_LOC_HEAD: {len(df_mass_res_merged.loc[df_mass_res_merged["MOM_LOC_HEAD"] == df_mass_res_merged["MOMLOC_HEAD"]])/len(df_mass_res_merged)}')
-    print(f'Match rate for SP_LOC_HEAD: {len(df_mass_res_merged.loc[df_mass_res_merged["SP_LOC_HEAD"] == df_mass_res_merged["SPLOC_HEAD"]])/len(df_mass_res_merged)}')
+    print(f'Match rate for SPLOC_HEAD: {len(df_mass_res_merged.loc[df_mass_res_merged["SPLOC_HEAD_acs"] == df_mass_res_merged["SPLOC_HEAD"]])/len(df_mass_res_merged)}')
     
 if __name__ == "__main__":
     main()
